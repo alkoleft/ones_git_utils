@@ -10,8 +10,12 @@ for item in diff_utils.get_files(repo):
     print(item)
 
 hcommit = repo.head.commit
+
+files_to_index = []
+
 for item in hcommit.diff(None, create_patch=True):
     print('>>')
+    files_to_index.append(item.b_path)
     print(Back.LIGHTBLACK_EX + os.path.join(path, item.a_path))
     print(Back.RESET)
 
@@ -36,3 +40,5 @@ for item in hcommit.diff(None, create_patch=True):
                 Fore.RESET]))
         if line[0] != '-':
             line_index += 1
+
+repo.index.add(files_to_index)
